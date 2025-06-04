@@ -40,7 +40,7 @@ export default function Recipes() {
 
   return (
     <View style={styles.container}>
-      <Image source={require('../../../assets/images/hat.png')} style={styles.image} />
+      <Image source={require('../../assets/images/hat.png')} style={styles.image} />
 
       <View style={styles.headerRow}>
         <View style={styles.searchContainer}>
@@ -56,7 +56,7 @@ export default function Recipes() {
 
         <TouchableOpacity
           style={styles.favoriteButton}
-          onPress={() => router.push('/pages/recipes/favorites')}
+          onPress={() => router.push('/recipes/favorites')}
         >
           <Feather name="heart" size={20} color="#1f1e1e" />
         </TouchableOpacity>
@@ -72,7 +72,7 @@ export default function Recipes() {
             recipe={item}
             onPress={() =>
               router.push({
-                pathname: '/pages/recipes/[id]',
+                pathname: '/recipes/[id]',
                 params: { id: item.id.toString() },
               } as const)
             }
