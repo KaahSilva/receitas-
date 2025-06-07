@@ -1,9 +1,10 @@
 import { useLocalSearchParams } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { Text, StyleSheet, ScrollView, Image, TouchableOpacity, View } from 'react-native';
+import { Text, StyleSheet,  Image, TouchableOpacity, View } from 'react-native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { FontAwesome } from '@expo/vector-icons';
+import { Header } from '../components/header';
 
 type Recipe = {
   id: number;
@@ -61,8 +62,10 @@ export default function RecipeDetails() {
   if (!recipe) return <Text style={styles.loading}>Carregando...</Text>;
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <View style={styles.container}>
+      <Header/>
       <View style={styles.header}>
+        
         <Image source={{ uri: recipe.image }} style={styles.image} />
         <TouchableOpacity style={styles.heartIcon} onPress={toggleFavorite}>
           <FontAwesome
@@ -82,7 +85,7 @@ export default function RecipeDetails() {
 
       <Text style={styles.section}>Instruções:</Text>
       <Text style={styles.text}>{recipe.instructions}</Text>
-    </ScrollView>
+    </View>
   );
 }
 
@@ -91,7 +94,10 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     backgroundColor: '#ebde95',
     padding: 20,
-    paddingBottom: 40,
+    paddingBottom: 10,
+    marginTop:-60,
+    marginBottom:-30
+ 
   },
   header: {
     position: 'relative',

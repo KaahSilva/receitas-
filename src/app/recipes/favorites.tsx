@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
-import { View, TextInput, FlatList, StyleSheet, Text, Image, TouchableOpacity } from 'react-native';
+import { View, TextInput, FlatList, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from 'expo-router';
 import { Feather } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import RecipeCard from '@/app/components/RecipeCard';
+import { Header } from '../components/header';
 
 export type Recipe = {
   id: number;
@@ -44,7 +45,8 @@ export default function Favorites() {
 
   return (
     <View style={styles.container}>
-      <Image source={require('../../assets/images/hat.png')} style={styles.image} />
+      <Header/>
+    
 
       <View style={styles.headerRow}>
         <View style={styles.searchContainer}>
@@ -93,13 +95,10 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 16,
     backgroundColor: '#ebde95',
+    marginBottom: -30,
+    marginTop: -60,
   },
-  image: {
-    alignSelf: 'center',
-    width: 50,
-    height: 50,
-    marginBottom: 12,
-  },
+ 
   headerRow: {
     flexDirection: 'row',
     alignItems: 'center',

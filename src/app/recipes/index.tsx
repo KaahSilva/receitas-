@@ -1,9 +1,10 @@
-import { View, TextInput, FlatList, StyleSheet, Text, TouchableOpacity, Image } from 'react-native';
+import { View, TextInput, FlatList, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'expo-router';
 import axios from 'axios';
 import RecipeCard from '@/app/components/RecipeCard';
 import { Feather } from '@expo/vector-icons';
+import { Header } from '../components/header';
 
 type Recipe = {
   id: number;
@@ -40,8 +41,7 @@ export default function Recipes() {
 
   return (
     <View style={styles.container}>
-      <Image source={require('../../assets/images/hat.png')} style={styles.image} />
-
+      <Header/>
       <View style={styles.headerRow}>
         <View style={styles.searchContainer}>
           <Feather name="search" size={22} color="#af814c" style={styles.icon} />
@@ -88,13 +88,11 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 16,
     backgroundColor: '#ebde95',
+    marginBottom: -30,
+    marginTop: -60,
   },
-  image: {
-    alignSelf: 'center',
-    width: 50,
-    height: 50,
-    marginBottom: 12,
-  },
+
+
   headerRow: {
     flexDirection: 'row',
     alignItems: 'center',

@@ -35,6 +35,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#ebde95',
     justifyContent: 'center',
     alignItems: 'center',
+    marginBottom: -30,
+    marginTop: -60,
   },
   image: {
     width: 150,
