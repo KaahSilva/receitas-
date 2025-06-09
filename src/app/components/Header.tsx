@@ -2,7 +2,7 @@ import { View, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 
-export function Header() {
+export default function Header() {
   const router = useRouter();
 
   return (

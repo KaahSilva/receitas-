@@ -5,7 +5,7 @@ import { useRouter } from 'expo-router';
 import { Feather } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import RecipeCard from '@/app/components/RecipeCard';
-import { Header } from '../components/header';
+import Header from '../components/Header';
 
 export type Recipe = {
   id: number;

@@ -1,10 +1,10 @@
 import { useLocalSearchParams } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { Text, StyleSheet,  Image, TouchableOpacity, View } from 'react-native';
+import { Text, StyleSheet, Image, TouchableOpacity, View, ScrollView, SafeAreaView } from 'react-native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { FontAwesome } from '@expo/vector-icons';
-import { Header } from '../components/header';
+import Header from '../components/Header';
 
 type Recipe = {
   id: number;
@@ -21,12 +21,14 @@ export default function RecipeDetails() {
   const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
-    axios.get(`https://dummyjson.com/recipes/${id}`)
-      .then(res => {
-        setRecipe(res.data);
-        checkIfFavorite(res.data.id);
-      })
-      .catch(() => setError('Erro ao carregar detalhes da receita'));
+    if (id) {
+      axios.get(`https://dummyjson.com/recipes/${id}`)
+        .then(res => {
+          setRecipe(res.data);
+          checkIfFavorite(res.data.id);
+        })
+        .catch(() => setError('Erro ao carregar detalhes da receita'));
+    }
   }, [id]);
 
   const checkIfFavorite = async (recipeId: number) => {
@@ -39,10 +41,10 @@ export default function RecipeDetails() {
   };
 
   const toggleFavorite = async () => {
-    if (!recipe || !recipe.id || !recipe.name) return;
+    if (!recipe) return;
 
     const saved = await AsyncStorage.getItem('favorites');
-    const list = saved ? JSON.parse(saved) as Recipe[] : [];
+    const list = saved ? (JSON.parse(saved) as Recipe[]) : [];
 
     const exists = list.some(r => r.id === recipe.id);
     let updated: Recipe[];
@@ -62,47 +64,56 @@ export default function RecipeDetails() {
   if (!recipe) return <Text style={styles.loading}>Carregando...</Text>;
 
   return (
-    <View style={styles.container}>
-      <Header/>
-      <View style={styles.header}>
-        
-        <Image source={{ uri: recipe.image }} style={styles.image} />
-        <TouchableOpacity style={styles.heartIcon} onPress={toggleFavorite}>
-          <FontAwesome
-            name={isFavorite ? 'heart' : 'heart-o'}
-            size={28}
-            color="#EB6D6C"
-          />
-        </TouchableOpacity>
+    <SafeAreaView style={styles.screenContainer}>
+      <View style={styles.headerContainer}>
+        <Header />
       </View>
+      <ScrollView contentContainerStyle={styles.contentContainer}>
+        <View style={styles.imageContainer}>
+          <Image source={{ uri: recipe.image }} style={styles.image} />
+          <TouchableOpacity style={styles.heartIcon} onPress={toggleFavorite}>
+            <FontAwesome
+              name={isFavorite ? 'heart' : 'heart-o'}
+              size={28}
+              color="#EB6D6C"
+            />
+          </TouchableOpacity>
+        </View>
 
-      <Text style={styles.title}>{recipe.name}</Text>
+        <Text style={styles.title}>{recipe.name}</Text>
 
-      <Text style={styles.section}>Ingredientes:</Text>
-      {recipe.ingredients.map((ing, i) => (
-        <Text key={i} style={styles.text}>• {ing}</Text>
-      ))}
+        <Text style={styles.section}>Ingredientes:</Text>
+        {recipe.ingredients.map((ing, i) => (
+          <Text key={i} style={styles.text}>• {ing}</Text>
+        ))}
 
-      <Text style={styles.section}>Instruções:</Text>
-      <Text style={styles.text}>{recipe.instructions}</Text>
-    </View>
+        <Text style={styles.section}>Instruções:</Text>
+        <Text style={styles.text}>{recipe.instructions}</Text>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flexGrow: 1,
+  screenContainer: {
+    flex: 1,
     backgroundColor: '#ebde95',
-    padding: 20,
-    paddingBottom: 10,
     marginTop:-60,
     marginBottom:-30
- 
   },
-  header: {
+  headerContainer: {
+    paddingHorizontal: 20, 
+  },
+  contentContainer: {
+    paddingHorizontal: 20,
+    paddingBottom: 40,
+  },
+  
+  imageContainer: {
     position: 'relative',
     alignItems: 'center',
     marginBottom: 20,
+    marginTop: 12,
   },
   image: {
     width: '100%',
@@ -138,13 +149,15 @@ const styles = StyleSheet.create({
     lineHeight: 22,
   },
   loading: {
-    marginTop: 40,
+    flex: 1,
+    justifyContent: 'center',
     textAlign: 'center',
     fontSize: 18,
   },
   error: {
+    flex: 1,
+    justifyContent: 'center',
     color: 'red',
-    marginTop: 40,
     textAlign: 'center',
     fontSize: 16,
   },

@@ -1,6 +1,6 @@
 import { View, Text, Image, StyleSheet, TouchableOpacity, Linking } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
-import { Header } from './components/header';
+import Header  from './components/Header';
 
 export default function About() {
   const openLinkedIn = () => {

@@ -4,7 +4,7 @@ import { useRouter } from 'expo-router';
 import axios from 'axios';
 import RecipeCard from '@/app/components/RecipeCard';
 import { Feather } from '@expo/vector-icons';
-import { Header } from '../components/header';
+import  Header from '../components/Header';
 
 type Recipe = {
   id: number;
